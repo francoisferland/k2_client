@@ -36,9 +36,9 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 #include <yaml-cpp/yaml.h>
 
 extern "C" {
-#include <libavcodec.h>
-#include <libavformat.h>
-#include <libswscale.h>
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
 }
 
 using boost::asio::ip::tcp;

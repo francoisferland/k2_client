@@ -95,6 +95,6 @@ if (${ffmpeg_FOUND})
     message("!!! Found FFMPEG libraries, will build H.264 decoder.")
 
     include_directories(${ffmpeg_INCLUDE_DIRS})
-    add_executable(startRGB_h264 ${PROJECT_SOURCE_DIR}/src/startRGB_h264.cpp)
-    target_link_libraries(startRGB_h264 ${catkin_LIBRARIES} ${ffmpeg_LIBRARIES})
+    add_executable(rgb_h264 ${PROJECT_SOURCE_DIR}/src/rgb_h264.cpp)
+    target_link_libraries(rgb_h264 ${catkin_LIBRARIES} ${ffmpeg_LIBRARIES})
 endif (${ffmpeg_FOUND{)
