@@ -21,6 +21,9 @@ find_package(catkin REQUIRED COMPONENTS
     message_generation
 )
 
+# Optional (for H.264 decoding)
+pkg_check_modules(ffmpeg libavcodec libavformat libswscale)
+
 add_message_files(FILES
     Activities.msg
     Appearance.msg
@@ -83,5 +86,10 @@ target_link_libraries(startDepth ${JSONCPP_LIBRARY} ${catkin_LIBRARIES})
 target_link_libraries(startIR    ${JSONCPP_LIBRARY} ${catkin_LIBRARIES})
 target_link_libraries(startRGB   ${JSONCPP_LIBRARY} ${catkin_LIBRARIES})
 
+if (${ffmpeg_FOUND})
+    message("!!! Found FFMPEG libraries, will build H.264 decoder.")
 
-
+    include_directories(${ffmpeg_INCLUDE_DIRS})
+    add_executable(startRGB_h264 ${PROJECT_SOURCE_DIR}/src/startRGB_h264.cpp)
+    target_link_libraries(startRGB_h264 ${catkin_LIBRARIES} ${ffmpeg_LIBRARIES})
+endif (${ffmpeg_FOUND{)
