@@ -1,0 +1,9 @@
+<launch>
+    <group ns="/head/kinect2">
+        <node name="k2_rgb" pkg="k2_client" type="rgb">
+            <param name="host" value="192.168.2.64" />
+        </node>
+    </group>
+</launch>
+
+
