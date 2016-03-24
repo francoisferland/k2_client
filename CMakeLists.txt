@@ -26,7 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 # Optional (for H.264 decoding)
-pkg_check_modules(ffmpeg libavcodec libavformat libswscale)
+pkg_check_modules(ffmpeg libavcodec libavformat libavutil libswscale)
 
 add_message_files(FILES
     Activities.msg
