@@ -53,9 +53,11 @@ int main(int argc, char *argv[])
 
     // Retrieve the hostname and port of the k2_server.
     std::string server_host, server_port, frame_id;
+    bool discard_timestamp;
     n.getParam("host", server_host);
     n.param<std::string>("port", server_port, "9003"); // default for k2_server bodies
     n.param<std::string>("frame_id", frame_id, "/k2/depth_frame");
+    n.param("discard_timestamp", discard_timestamp, true);
 
     // Create a Boost ASIO service to handle server connection.
     boost::asio::io_service io_service;
@@ -107,7 +109,8 @@ int main(int argc, char *argv[])
         {
             k2_client::Body body;
 
-            body.header.stamp =              ros::Time(node["Time"].as<unsigned long>());
+            ros::Time stamp = discard_timestamp ? ros::Time::now() : ros::Time(node["Time"].as<unsigned long>());
+            body.header.stamp =              stamp;
             body.header.frame_id =           frame_id;
             body.leanTrackingState =         body_node["LeanTrackingState"].as<int>();
             body.lean.leanX =                body_node["Lean"]["X"].as<double>();

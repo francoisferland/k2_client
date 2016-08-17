@@ -52,9 +52,11 @@ int main(int argc, char *argv[])
 
     // Retrieve the hostname and port of the k2_server.
     std::string server_host, server_port, frame_id;
+    bool discard_timestamp;
     n.getParam("host", server_host);
     n.param<std::string>("port", server_port, "9000"); // default for k2_server RGB
     n.param<std::string>("frame_id", frame_id, "/k2/rgb_frame");
+    n.param("discard_timestamp", discard_timestamp, true);
 
     // Create a Boost ASIO service to handle server connection.
     boost::asio::io_service io_service;
@@ -107,7 +109,8 @@ int main(int argc, char *argv[])
         camera_info.header.frame_id = cv_image.header.frame_id;
 
         // Send out the resulting message and request a new message.
-        camera_publisher.publish(ros_image, camera_info, ros::Time(timestamp));
+        ros::Time stamp = discard_timestamp ? ros::Time::now() : ros::Time(timestamp);
+        camera_publisher.publish(ros_image, camera_info, stamp);
         boost::asio::write(socket, boost::asio::buffer("OK\n"));
         ros::spinOnce();
     }
